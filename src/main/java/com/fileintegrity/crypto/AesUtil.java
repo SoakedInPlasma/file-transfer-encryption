@@ -16,6 +16,9 @@ import javax.crypto.spec.GCMParameterSpec;
 /**
  *
  * @author Sam
+ * 
+ * 
+ * Encrypts and decrypts the file using AES-256, symmetric locking and unlocking
  */
 public class AesUtil {
     private static final String ALGORITHM = "AES";
@@ -26,6 +29,7 @@ public class AesUtil {
     
     private static final SecureRandom RANDOM = new SecureRandom();
     
+    // creates a random AES key
     public static SecretKey generateKey() {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance(ALGORITHM);
@@ -36,12 +40,14 @@ public class AesUtil {
         }
     }
     
+    // creates initialisation vector (random value used once when encrypting)
     public static byte[] generateIv() {
         byte[] iv = new byte[IV_LENGTH_BYTES];
         RANDOM.nextBytes(iv);
         return iv;
     }
     
+    // encrypts data
     public static byte[] encrypt(byte[] data, SecretKey key, byte[] iv) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
@@ -52,6 +58,7 @@ public class AesUtil {
         }
     }
     
+    // decrypts data
     public static byte[] decrypt(byte[] encrypted, SecretKey key, byte[] iv) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
