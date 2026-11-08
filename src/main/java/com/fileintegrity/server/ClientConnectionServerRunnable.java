@@ -1,4 +1,4 @@
-package com.fileintegrity.crypto;
+package com.fileintegrity.server;
 
 import java.io.*;
 import java.net.*;
