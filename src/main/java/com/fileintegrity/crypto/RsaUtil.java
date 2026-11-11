@@ -17,6 +17,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.OAEPParameterSpec;
 import javax.crypto.spec.PSource;
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
+import java.security.KeyFactory;
+import java.security.spec.X509EncodedKeySpec;
 
 /**
  *
@@ -61,6 +64,21 @@ public class RsaUtil {
             throw new SecurityException("Could not unlock key", e);
         } catch(GeneralSecurityException e) {
             throw new IllegalStateException("RSA decryption failed", e);
+        }
+    }
+    
+    // turns PK into base64 text to be displayed on frontend
+    public static String publicKeyToString(PublicKey key) {
+        return Base64.getEncoder().encodeToString(key.getEncoded());
+    }
+    
+    // turns base65 back into a pk
+    public static PublicKey stringToPublicKey(String base64) {
+        try {
+            byte[] bytes = Base64.getDecoder().decode(base64);
+            return KeyFactory.getInstance(ALGORITHM).generatePublic(new X509EncodedKeySpec(bytes));
+        } catch (GeneralSecurityException e) {
+            throw new IllegalStateException("Invalid public key", e);
         }
     }
 }

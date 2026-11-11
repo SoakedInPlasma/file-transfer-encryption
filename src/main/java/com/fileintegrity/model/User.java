@@ -42,7 +42,7 @@ public class User {
         return keyPair.getPublic();
     }
     
-    public PrivateKey getPrivataeKey() {
+    public PrivateKey getPrivateKey() {
         return keyPair.getPrivate();
     }
 }
