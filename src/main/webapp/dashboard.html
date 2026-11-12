@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Transfer Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="dashboard-container">
+
+        <header class="dashboard-header">
+            <h1>Secure File Transfer</h1>
+            <button type="button" id="logoutBtn">Logout</button>
+        </header>
+
+        <section class="dashboard-section">
+            <h2>Send a File</h2>
+
+            <form id="sendForm">
+                <label for="fileInput">Select File</label>
+                <input type="file" id="fileInput" required>
+
+                <label for="recipient">Send To</label>
+                <select id="recipient" required>
+                    <option value="">Select a user</option>
+                </select>
+
+                <button type="submit" id="sendBtn">
+                    Encrypt &amp; Send
+                </button>
+            </form>
+
+            <p id="sendMessage" role="status"></p>
+        </section>
+
+        <section class="dashboard-section">
+            <h2>Received Files</h2>
+
+            <button type="button" id="refreshBtn">
+                Refresh Inbox
+            </button>
+
+            <div id="inbox">
+                <p>No files to display.</p>
+            </div>
+
+            <p id="decryptMessage" role="status"></p>
+        </section>
+
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

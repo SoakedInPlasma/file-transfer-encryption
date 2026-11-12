@@ -1,0 +1,226 @@
+
+/*page layout*/
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f3f4f6;
+    color: #222;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login and registration form */
+.auth-container {
+    width: 100%;
+    max-width: 380px;
+    padding: 30px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+h1 {
+    font-size: 23px;
+    margin: 0 0 10px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 18px;
+    margin: 25px 0 15px;
+}
+
+p {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/*form fields*/
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+input:focus {
+    outline: none;
+    border-color: #334155;
+}
+
+/*submit button */
+#submitBtn {
+    width: 100%;
+    padding: 11px;
+    margin-top: 5px;
+    background-color: #334155;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#submitBtn:hover {
+    background-color: #1e293b;
+}
+
+#submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/*login / register switch*/
+#toggleBtn {
+    border: none;
+    background: none;
+    color: #2563eb;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+#toggleBtn:hover {
+    text-decoration: underline;
+}
+
+/* Form messages */
+#message {
+    font-size: 13px;
+    margin-top: 15px;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+#message.success {
+    color: #267344;
+}
+
+#message.error {
+    color: #b91c1c;
+}
+
+
+/* Dashboard layout */
+.dashboard-container {
+    width: 100%;
+    max-width: 750px;
+    padding: 30px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Dashboard header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    text-align: left;
+}
+
+/* Dashboard sections */
+.dashboard-section {
+    margin-bottom: 30px;
+}
+
+.dashboard-section h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* File upload form */
+#sendForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#fileInput,
+#recipient {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background: white;
+    font-size: 14px;
+}
+
+/* Dashboard buttons */
+#sendBtn,
+#refreshBtn,
+#logoutBtn {
+    padding: 10px 15px;
+    background: #334155;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#sendBtn:hover,
+#refreshBtn:hover,
+#logoutBtn:hover {
+    background: #1e293b;
+}
+
+/* Received files section */
+#inbox {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 80px;
+}
+
+#inbox p {
+    text-align: left;
+}
+
+/* Status messages */
+#sendMessage,
+#decryptMessage {
+    font-size: 14px;
+    text-align: left;
+}
+
+#sendMessage.success,
+#decryptMessage.success {
+    color: #267344;
+}
+
+#sendMessage.error,
+#decryptMessage.error {
+    color: #b91c1c;
+}

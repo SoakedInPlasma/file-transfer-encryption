@@ -1,10 +1,50 @@
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Transfer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="auth-container">
+        <h1>Secure File Transfer</h1>
+        <p>Login or create an account to get started.</p>
+
+        <form id="authForm">
+            <h2 id="formTitle">Login</h2>
+
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+            >
+
+            <button type="submit" id="submitBtn">
+                Login
+            </button>
+        </form>
+
+        <p id="message" role="status" aria-live="polite"></p>
+
+        <p>
+            <span id="toggleText">Don't have an account?</span>
+            <button type="button" id="toggleBtn">Register</button>
+        </p>
+    </main>
+
+    <script src="script.js"></script>
+</body>
 </html>
