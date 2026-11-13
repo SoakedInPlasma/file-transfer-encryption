@@ -55,15 +55,100 @@ fileInput.addEventListener("change", async function () {
     }
 });
 
-//Prevent submission until backend is connected
-sendForm.addEventListener("submit", function (event) {
+
+
+//handle file sending through backend encryption service
+const recipientSelect = document.getElementById("recipient");
+
+
+
+ //loads registered users into the recipient dropdown
+async function loadRecipients() {
+    try {
+        const response = await fetch("api/auth/users", {
+            credentials: "same-origin"
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to load users");
+        }
+
+        const usernames = await response.json();
+
+        recipientSelect.innerHTML = '<option value="">Select a user</option>';
+
+        usernames.forEach(function (username) {
+            const option = document.createElement("option");
+            option.value = username;
+            option.textContent = username;
+            recipientSelect.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error("Error loading recipients:", error);
+        sendMessage.textContent = "Could not load recipients.";
+        sendMessage.className = "error";
+    }
+}
+
+// Load recipients when the dashboard opens
+loadRecipients();
+
+
+
+sendForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    sendMessage.textContent =
-        "File sending is not connected yet.";
+    const file = fileInput.files[0];
+    const receiver = recipientSelect.value;
 
+    if (!file || !selectedFileBase64 || !receiver) {
+        sendMessage.textContent = "Please select a file and recipient.";
+        sendMessage.className = "error";
+        return;
+    }
+
+    sendMessage.textContent = "Encrypting and sending file...";
     sendMessage.className = "";
+
+    try {
+        const response = await fetch("api/files/send", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                receiver: receiver,
+                fileName: file.name,
+                fileDataBase64: selectedFileBase64
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            sendMessage.textContent =
+                result.message || "File sent successfully!";
+            sendMessage.className = "success";
+
+            console.log("File package ID:", result.packageId);
+
+            sendForm.reset();
+            selectedFileBase64 = null;
+        } else {
+            sendMessage.textContent =
+                result.error || "Failed to send file.";
+            sendMessage.className = "error";
+        }
+
+    } catch (error) {
+        console.error("File sending error:", error);
+        sendMessage.textContent = "Could not connect to the server.";
+        sendMessage.className = "error";
+    }
 });
+
 
 
 
@@ -86,3 +171,122 @@ logoutBtn.addEventListener("click", async function () {
         alert("Could not connect to the server.");
     }
 });
+
+
+ //display encrypted files received by user
+const refreshBtn = document.getElementById("refreshBtn");
+const inbox = document.getElementById("inbox");
+const decryptMessage = document.getElementById("decryptMessage");
+
+async function loadInbox() {
+    inbox.textContent = "Loading received files...";
+
+    try {
+        const response = await fetch("api/files/inbox", {
+            method: "GET",
+            credentials: "same-origin"
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to retrieve inbox.");
+        }
+
+        const files = await response.json();
+        inbox.replaceChildren();
+
+        if (files.length === 0) {
+            inbox.textContent = "No files received yet.";
+            return;
+        }
+
+        files.forEach(function (file) {
+            const item = document.createElement("div");
+            item.className = "inbox-item";
+
+            const details = document.createElement("p");
+            details.textContent =
+                file.fileName + " — From: " + file.sender;
+
+            const downloadBtn = document.createElement("button");
+            downloadBtn.type = "button";
+            downloadBtn.textContent = "Decrypt & Download";
+
+            downloadBtn.addEventListener("click", function () {
+                downloadFile(file.id);
+            });
+
+            item.appendChild(details);
+            item.appendChild(downloadBtn);
+            inbox.appendChild(item);
+        });
+
+    } catch (error) {
+        console.error("Inbox error:", error);
+        inbox.textContent = "Could not load received files.";
+    }
+}
+
+//refresh the inbox when the user clicks the button
+refreshBtn.addEventListener("click", loadInbox);
+
+//load received files when the dashboard opens
+loadInbox();
+
+
+//retrieves decrypts and downloads a received file
+async function downloadFile(packageId) {
+    decryptMessage.textContent = "Decrypting and verifying file...";
+    decryptMessage.className = "";
+
+    try {
+        const response = await fetch(
+            "api/files/download/" + encodeURIComponent(packageId),
+            {
+                method: "GET",
+                credentials: "same-origin"
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || "Download failed.");
+        }
+
+        // Convert the returned base64 content back into file bytes
+        const binaryString = atob(result.fileDataBase64);
+        const bytes = new Uint8Array(binaryString.length);
+
+        for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+
+        // Create a downloadable file in the browser
+        const blob = new Blob([bytes], {
+            type: "application/octet-stream"
+        });
+
+        const downloadUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = downloadUrl;
+        link.download = result.fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(downloadUrl);
+
+        decryptMessage.textContent =
+            "File decrypted and downloaded successfully!";
+        decryptMessage.className = "success";
+
+    } catch (error) {
+        console.error("Download error:", error);
+
+        decryptMessage.textContent = error.message;
+        decryptMessage.className = "error";
+    }
+}
+
+

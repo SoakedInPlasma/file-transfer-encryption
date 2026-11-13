@@ -6,6 +6,9 @@ package com.fileintegrity.resources;
 
 import com.fileintegrity.model.UserCredentials;
 import com.fileintegrity.services.AuthService;
+import com.fileintegrity.repository.UserMemoryStore;
+import jakarta.ws.rs.GET;
+import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.Consumes;
@@ -82,6 +85,32 @@ public class AuthResource {
         }
         
         return Response.ok("{\"message\" : \" Logout successful!!! \"}").build();
-    }
+        }
+
+        // Return registered usernames for the recipient dropdown
+        @GET
+        @Path("/users")
+        public Response getRegisteredUsers(@Context HttpServletRequest request) {
+            HttpSession session = request.getSession(false);
+
+            // Only logged-in users can request the recipient list
+            if (session == null || session.getAttribute("user") == null) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Please log in.\"}")
+                .build();
+            }
+
+            String currentUser = (String) session.getAttribute("user");
+
+            // Exclude the logged-in user from the recipient list
+            List<String> usernames = UserMemoryStore.getAllUsernames()
+                .stream()
+                .filter(username -> !username.equals(currentUser))
+                .toList();
+
+            return Response.ok(usernames).build();
+        }
 
 }
+
+

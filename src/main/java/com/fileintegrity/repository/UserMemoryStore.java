@@ -25,6 +25,13 @@ public class UserMemoryStore {
     public static User findByUserName(String userName){
         return userDb.get(userName);
     }
+
+    //return registered usernames without exposing user credentials
+    public static java.util.List<String> getAllUsernames() {
+        return userDb.keySet().stream()
+            .sorted()
+            .toList();
+    }
     
     
 }
