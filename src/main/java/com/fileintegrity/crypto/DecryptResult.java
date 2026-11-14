@@ -42,6 +42,7 @@ public class DecryptResult {
         return new DecryptResult(null, false, false, message);
     }
     
+    // checks if the file is verified by checking if the hash matches and the signature is valid
     public boolean isVerified() {
         return hashMatches && signatureValid;
     }

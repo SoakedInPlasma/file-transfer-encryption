@@ -10,8 +10,11 @@ package com.fileintegrity.crypto;
  */
 public class HashUtilDemo {
     public static void main(String[] args) {
+        // test the HashUtil class
         System.out.println(HashUtil.sha256Hex("abc".getBytes()));
-        System.out.println(HashUtil.sha256Hex("hello".getBytes()));
+
+        // test that different inputs produce different hashes
+        System.out.println(HashUtil.sha256Hex("hello".getBytes())); 
         System.out.println(HashUtil.sha256Hex("hello!".getBytes()));
     }
 }

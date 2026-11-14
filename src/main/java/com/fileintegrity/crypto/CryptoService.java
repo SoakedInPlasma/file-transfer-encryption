@@ -4,17 +4,20 @@
  */
 package com.fileintegrity.crypto;
 
-import com.fileintegrity.model.EncryptedPackage;
-import com.fileintegrity.model.User;
 import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
+
 import javax.crypto.SecretKey;
+
+import com.fileintegrity.model.EncryptedPackage;
+import com.fileintegrity.model.User;
 
 /**
  *
  * @author Sam
  */
 public class CryptoService {
+    // Encrypts the file for the receiver, signs it with the senders private key and returns an EncryptedPackage
     public static EncryptedPackage encryptForRecipient(byte[] file, String fileName, User sender, User receiver) {
         // 1. Fingerprinting the file
         String hash = HashUtil.sha256Hex(file);
@@ -35,9 +38,11 @@ public class CryptoService {
         // 6. Attachs the senders PK to check signature
         String senderPublicKey = RsaUtil.publicKeyToString(sender.getPublicKey());
         
+        // 7. Return the EncryptedPackage to be sent to the receiver
         return new EncryptedPackage(sender.getUsername(), receiver.getUsername(), fileName, encryptedFile, encryptedAesKey, iv, hash, signature, senderPublicKey);
     }
     
+    // Decrypts the file for the receiver, verifies the signature with the senders public key and returns a DecryptResult
     public static DecryptResult decryptAndVerify(EncryptedPackage pkg, User receiver) {
         // if sent to the wrong user
         if(!pkg.getReceiver().equals(receiver.getUsername())) {
@@ -75,6 +80,7 @@ public class CryptoService {
         if(!signatureValid) {
             return new DecryptResult(null,true,false,"Signature Invalid: sender could not be verified");
         }
+        // 6. Return the decrypted file and verification results
         return new DecryptResult(file,true,true,"File Verified");
     }
 }
