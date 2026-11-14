@@ -11,8 +11,10 @@ import java.security.NoSuchAlgorithmException;
  * @author Sam
  */
 public class HashUtil {
+    // creates a SHA-256 hash of the data and returns it as a hex string
     private static final String ALGORITHM = "SHA-256";
     
+    // creates a SHA-256 hash of the data and returns it as a hex string
     public static String sha256Hex(byte[] data) {
         try {
             MessageDigest digest = MessageDigest.getInstance(ALGORITHM);
@@ -23,6 +25,7 @@ public class HashUtil {
         }
     }
     
+    // converts a byte array to a hex string so it can be easily stored and compared to other hashes
     private static String toHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {

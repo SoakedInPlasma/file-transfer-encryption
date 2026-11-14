@@ -7,6 +7,7 @@ package com.fileintegrity.crypto;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+
 import javax.crypto.AEADBadTagException;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -27,10 +28,11 @@ public class AesUtil {
     private static final int IV_LENGTH_BYTES = 12;
     private static final int TAG_LENGTH_BITS = 128;
     
-    private static final SecureRandom RANDOM = new SecureRandom();
+    private static final SecureRandom RANDOM = new SecureRandom(); // cryptographically strong random number generator
     
     // creates a random AES key
     public static SecretKey generateKey() {
+        // AES-256 key generation
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance(ALGORITHM);
             keyGen.init(KEY_SIZE_BITS, RANDOM);
@@ -47,7 +49,7 @@ public class AesUtil {
         return iv;
     }
     
-    // encrypts data
+    // encrypts data by using AES-256 GCM mode
     public static byte[] encrypt(byte[] data, SecretKey key, byte[] iv) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
@@ -58,7 +60,7 @@ public class AesUtil {
         }
     }
     
-    // decrypts data
+    // decrypts data by using the same key and initialisation vector (iv) used to encrypt the data
     public static byte[] decrypt(byte[] encrypted, SecretKey key, byte[] iv) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);

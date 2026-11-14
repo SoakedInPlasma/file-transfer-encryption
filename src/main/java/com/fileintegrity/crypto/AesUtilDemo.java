@@ -5,6 +5,7 @@
 package com.fileintegrity.crypto;
 
 import java.util.Base64;
+
 import javax.crypto.SecretKey;
 
 /**
@@ -13,8 +14,10 @@ import javax.crypto.SecretKey;
  */
 public class AesUtilDemo {
     public static void main(String[] agrs) {
+        // original data
         byte[] original = "This is a scret file".getBytes();
         
+        // generate AES key and initialisation vector (iv)
         SecretKey key = AesUtil.generateKey();
         byte[] iv = AesUtil.generateIv();
         
