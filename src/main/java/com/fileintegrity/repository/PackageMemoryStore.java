@@ -5,6 +5,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import com.fileintegrity.model.EncryptedPackage;
+/* 
+ * @author Martin
+ */
 
 //this will be our in memory store for packages that are sent and received, lightweight method of saving our package info when we start server ***DOES NOT PERSIST WHEN RESTARTING SERVER
 public class PackageMemoryStore {

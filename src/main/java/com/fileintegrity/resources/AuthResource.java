@@ -21,7 +21,7 @@ import jakarta.ws.rs.core.Response;
 
 /**
  *
- * @author marti
+ * @author martin
  */
 @Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,7 +30,14 @@ public class AuthResource {
 
     private final AuthService authService = new AuthService();
 
-    //this method parses the register fields as a json entity 
+    /*
+    *registerRequest method handles the registration of a new user.
+    *It takes a UserCredentials object as input, which contains the username and password provided by the user. 
+    *The method calls the registerUser method of the AuthService class to attempt to register the user.
+    *If the registration is successful, it returns a CREATED response with a success message.
+    *If the registration fails, it returns a BAD REQUEST response with an error message. 
+    *In case of any server errors during the process, it returns an INTERNAL SERVER ERROR response.
+    */
     @POST
     @Path("/register")
     public Response registerRequest(UserCredentials userCredentials) {
@@ -50,6 +57,9 @@ public class AuthResource {
 
     }
 
+    /*
+    *autheticates a user and creates a session for them if successful
+    */
     @POST
     @Path("/login")
     public Response loginRequest(UserCredentials userCredentials, @Context HttpServletRequest request) {
@@ -72,7 +82,9 @@ public class AuthResource {
         }
 
     }
-    
+    /*
+     * Logs out a user and invalidates their session
+     */
     @POST
     @Path("/logout")
     public Response logoutRequest(@Context HttpServletRequest request){

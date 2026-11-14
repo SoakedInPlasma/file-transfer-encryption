@@ -13,6 +13,9 @@ import com.fileintegrity.model.User;
 import com.fileintegrity.repository.PackageMemoryStore;
 import com.fileintegrity.repository.UserMemoryStore;
 
+/*
+* @author martin
+ */
 public class FileTransferService {
 
 

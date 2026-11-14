@@ -6,7 +6,8 @@ import jakarta.ws.rs.core.Response;
 
 /**
  *
- * @author 
+ * @author Martin
+ * class to test if the application is running on Jakarta EE 11
  */
 @Path("jakartaee11")
 public class JakartaEE11Resource {

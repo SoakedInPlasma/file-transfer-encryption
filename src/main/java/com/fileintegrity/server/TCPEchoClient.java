@@ -3,6 +3,11 @@ package com.fileintegrity.server;
 import java.io.*;
 import java.net.*;
 
+/**
+ *
+ * @author Martin
+ * class to test the TCP echo client and server connection, REDUNDANT, we will not use this class in the final implementation, but it is here for reference
+ */
 public class TCPEchoClient {
     private static InetAddress host;
     private static final int PORT = 1234;

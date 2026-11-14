@@ -3,6 +3,11 @@ package com.fileintegrity.server;
 import java.io.*;
 import java.net.*;
 
+/**
+ *
+ * @author Martin
+ * class to test the TCP echo server, REDUNDANT, we will not use this class in the final implementation, but it is here for reference
+ */
 public class TCPServer {
 
     private static ServerSocket servSocket;

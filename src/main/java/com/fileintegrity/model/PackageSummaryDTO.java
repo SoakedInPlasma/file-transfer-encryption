@@ -1,5 +1,8 @@
 package com.fileintegrity.model;
-//DTO for the package summary when user lists packages to choose from
+/*
+*@author Martin
+*DTO for the package summary when user lists packages to choose from
+*/
 public class PackageSummaryDTO {
     private String id;
     private String sender;

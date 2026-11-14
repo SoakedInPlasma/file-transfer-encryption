@@ -1,5 +1,8 @@
 package com.fileintegrity.model;
-
+/*
+*@author Martin
+*represents the response of a file download request, containing the file name and the file data in base64 format
+*/
 public class FileDownloadResponse {
     private String fileName;
     private String fileDataBase64;

@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
- * @author marti
+ * @author martin
  */
 //this will be our in memory storage for users, lightweight method of saving our user info when we start server
 //DOES NOT PERSIST WHEN RESTARTING SERVER

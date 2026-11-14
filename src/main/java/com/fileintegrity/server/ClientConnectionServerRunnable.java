@@ -3,6 +3,11 @@ package com.fileintegrity.server;
 import java.io.*;
 import java.net.*;
 
+/**
+ *
+ * @author Martin
+ * class to handle the client connection on the server side REDUNDANT, we will not use this class in the final implementation, but it is here for reference
+ */
 
 public class ClientConnectionServerRunnable implements Runnable {
     String name = null;

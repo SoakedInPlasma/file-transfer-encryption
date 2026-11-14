@@ -6,7 +6,7 @@ package com.fileintegrity.model;
 
 /**
  *
- * @author marti
+ * @author martin
  */
 
 //this will act as a DTO, takes the details from the front end and passes them to the api

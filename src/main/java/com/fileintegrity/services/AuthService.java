@@ -13,7 +13,7 @@ import java.security.KeyPair;
 
 /**
  *
- * @author marti
+ * @author martin
  */
 
 //register and login methods
@@ -37,7 +37,7 @@ public class AuthService {
             return false; // user exists already
         }
         
-        //generate salt and hash password using crypto utility
+        //generate salt and hash password, methods from passwordutil
         byte[] salt = PasswordUtil.generateSalt();
         String passwordHash = PasswordUtil.hashPassword(userCredentials.getPassword(), salt);
         

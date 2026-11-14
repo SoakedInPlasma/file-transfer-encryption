@@ -1,4 +1,8 @@
 package com.fileintegrity.model;
+/*
+*@author Martin
+*DTO for the file upload request
+*/
 
 public class FileUploadRequest {
     private String receiver;

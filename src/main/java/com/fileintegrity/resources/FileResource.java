@@ -19,6 +19,10 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+/* 
+ * @author Martin
+ */
+
 @Path("/files")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -75,13 +79,14 @@ public class FileResource {
     @GET
     @Path("/download/{id}")
     public Response downloadFile(@PathParam("id") String packageId, @Context HttpServletRequest request) {
-        String currentUser = getAuthenticatedUser(request);
+        String currentUser = getAuthenticatedUser(request); //get the authenticated user from the session
+        //if the user is not authenticated, return an UNAUTHORIZED response
         if (currentUser == null) {
             return Response.status(Response.Status.UNAUTHORIZED)
                     .entity("{\"error\": \"Unauthorized. Please log in.\"}")
                     .build();
         }
-
+        //try catch to handle any exceptions thrown by the downloadAndVerify method in FileTransferService
         try {
             FileDownloadResponse responseDto = fileTransferService.downloadAndVerify(packageId, currentUser);
             if (responseDto == null) {
@@ -103,7 +108,7 @@ public class FileResource {
                     .build();
         }
     }
-
+    //helper method to get the authenticated user from the session
     private String getAuthenticatedUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         return (session != null) ? (String) session.getAttribute("user") : null;
