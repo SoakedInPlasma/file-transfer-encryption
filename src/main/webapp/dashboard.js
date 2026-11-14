@@ -1,3 +1,5 @@
+//Frontend logic for selecting, sending, receiving and downloading files.
+//Communicates with the Java backend using REST API requests.
 
 const fileInput = document.getElementById("fileInput");
 const sendForm = document.getElementById("sendForm");
@@ -25,6 +27,7 @@ function convertToBase64(file) {
 }
 
 //handle file selection
+//reset any previously selected file data when the selection changes.
 fileInput.addEventListener("change", async function () {
     const file = fileInput.files[0];
 
@@ -62,7 +65,7 @@ const recipientSelect = document.getElementById("recipient");
 
 
 
- //loads registered users into the recipient dropdown
+ //request registered usernames from the backend and populate the dropdown
 async function loadRecipients() {
     try {
         const response = await fetch("api/auth/users", {
@@ -151,7 +154,7 @@ sendForm.addEventListener("submit", async function (event) {
 
 
 
-
+//end current session through the logout API and return the user to the login page.
 const logoutBtn = document.getElementById("logoutBtn");
 
 logoutBtn.addEventListener("click", async function () {

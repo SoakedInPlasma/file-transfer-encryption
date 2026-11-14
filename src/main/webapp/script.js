@@ -1,3 +1,5 @@
+//sandles the login and registration interface.
+//sends authentication requests to the Java backend.
 
 const form = document.getElementById("authForm");
 const formTitle = document.getElementById("formTitle");
