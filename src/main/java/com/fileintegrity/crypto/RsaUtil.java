@@ -28,7 +28,7 @@ import java.security.spec.X509EncodedKeySpec;
 public class RsaUtil {
     private static final String ALGORITHM = "RSA";
     private static final int KEY_SIZE_BITS = 2048; //RSA size standard
-    private static final String TRANSFORMATION = "RSA/ECB/OAEPadding";
+    private static final String TRANSFORMATION = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
     private static final OAEPParameterSpec OAEP_SPEC = new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT);
     
     // creates a new RSA key pair (public + private) each user will get 1
